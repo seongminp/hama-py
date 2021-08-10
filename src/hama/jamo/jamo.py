@@ -9,22 +9,30 @@ from .constants import (
 )
 
 
-def disassemble(text, out=list):
+def disassemble(text, out_type=list, include_position=False):
     """
     Deconstruct input text into Korean consonants and vowels.
 
     Args:
-        text (str): Input string to deconstruct.
-        out (type): [Optional, default: list] Output type. 
-                    One of list and str.
+        text              (str): Input string to deconstruct.
+        out_type         (type): [Optional, default: list] Output type. 
+                                 One of list and str.
+        include_position (bool): [Optional, default: False] Include position tags 
+                                 (/o for onset, /n for nucleus, /c for coda).
 
     Returns:
-        list: List of consonants and vowels. Symbols and foreign 
-              languages are returned as-is.
+        list/str: List of consonants and vowels. Symbols and foreign 
+                  languages are returned as-is.
         list: List that maps each index of disassembled component to 
               its original character index.
     """
-    out_list, recovery_map = list(), list()
+    if out_type == list:
+        out = list()
+    elif out_type == str:
+        out = ""
+    else:
+        raise Exception(f"Wrong output type: {out_type}.")
+    recovery_map = list()
 
     for i, c in enumerate(text):
 
@@ -40,21 +48,29 @@ def disassemble(text, out=list):
             joongsung_code = joongsungs[(code - 0xAC00) % (28 * 21) // 28]
             jongsung_code = jongsungs[(code - 0xAC00) % (28 * 21) % 28]
 
+            # Add position markers.
+            if include_position:
+                chosung_code += "/o"
+                joongsung_code += "/n"
+                if jongsung_code:
+                    jongsung_code += "/c"
+
             disassembled = [chosung_code, joongsung_code]
             if jongsung_code:
                 disassembled.append(jongsung_code)
 
         else:
-            disassembled = [c]
+            disassembled = [f"{c}/x" if include_position else c]
 
         for item in disassembled:
-            out_list.append(item)
-            recovery_map.append(i)
+            if out_type == list:
+                out.append(item)
+                recovery_map.append(i)
+            else:
+                out += item
+                recovery_map.extend([i] * len(item))
 
-    if out == list:
-        return out_list, recovery_map
-    else:
-        return "".join(out_list), recovery_map
+    return out, recovery_map
 
 
 def assemble(jamo_list):
