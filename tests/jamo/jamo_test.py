@@ -113,3 +113,101 @@ def test_disassemble():
         "ㄱ",
     ]
     assert disassemble("ㅓㅐㅔ")[0] == ["ㅓ", "ㅐ", "ㅔ"]
+
+
+def test_disassemble_with_position():
+    assert disassemble("", include_position=True)[0] == []
+    assert disassemble("5000원에 해주심", include_position=True)[0] == [
+        "5/x",
+        "0/x",
+        "0/x",
+        "0/x",
+        "ㅇ/o",
+        "ㅝ/n",
+        "ㄴ/c",
+        "ㅇ/o",
+        "ㅔ/n",
+        "ㅎ/o",
+        "ㅐ/n",
+        "ㅈ/o",
+        "ㅜ/n",
+        "ㅅ/o",
+        "ㅣ/n",
+        "ㅁ/c",
+    ]
+    assert disassemble("쿨거래 가능.", include_position=True)[0] == [
+        "ㅋ/o",
+        "ㅜ/n",
+        "ㄹ/c",
+        "ㄱ/o",
+        "ㅓ/n",
+        "ㄹ/o",
+        "ㅐ/n",
+        "ㄱ/o",
+        "ㅏ/n",
+        "ㄴ/o",
+        "ㅡ/n",
+        "ㅇ/c",
+        "./x",
+    ]
+    assert disassemble("뭐라고요?", include_position=True)[0] == [
+        "ㅁ/o",
+        "ㅝ/n",
+        "ㄹ/o",
+        "ㅏ/n",
+        "ㄱ/o",
+        "ㅗ/n",
+        "ㅇ/o",
+        "ㅛ/n",
+        "?/x",
+    ]
+    assert disassemble("비싼거 가타서..", include_position=True)[0] == [
+        "ㅂ/o",
+        "ㅣ/n",
+        "ㅆ/o",
+        "ㅏ/n",
+        "ㄴ/c",
+        "ㄱ/o",
+        "ㅓ/n",
+        "ㄱ/o",
+        "ㅏ/n",
+        "ㅌ/o",
+        "ㅏ/n",
+        "ㅅ/o",
+        "ㅓ/n",
+        "./x",
+        "./x",
+    ]
+    assert disassemble("안돼요!", include_position=True)[0] == [
+        "ㅇ/o",
+        "ㅏ/n",
+        "ㄴ/c",
+        "ㄷ/o",
+        "ㅙ/n",
+        "ㅇ/o",
+        "ㅛ/n",
+        "!/x",
+    ]
+    assert disassemble("싫어요!", include_position=True)[0] == [
+        "ㅅ/o",
+        "ㅣ/n",
+        "ㅀ/c",
+        "ㅇ/o",
+        "ㅓ/n",
+        "ㅇ/o",
+        "ㅛ/n",
+        "!/x",
+    ]
+    assert disassemble("님 신고 ㅅㄱ", include_position=True)[0] == [
+        "ㄴ/o",
+        "ㅣ/n",
+        "ㅁ/c",
+        "ㅅ/o",
+        "ㅣ/n",
+        "ㄴ/c",
+        "ㄱ/o",
+        "ㅗ/n",
+        "ㅅ/x",
+        "ㄱ/x",
+    ]
+    assert disassemble("ㅓㅐㅔ", include_position=True)[0] == ["ㅓ/x", "ㅐ/x", "ㅔ/x"]
