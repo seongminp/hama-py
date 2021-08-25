@@ -33,7 +33,11 @@ def g2p(text):
         # fix[1] is the starting index of matched pronounciation rule.
         fixes = {fix[1]: fix for fix in pronounciation_fixes(rules, jamos)}
         jamos = list(apply_fixes(jamos, fixes))
-    return jamos
+
+    # ipa = [jamo_to_ipa[jamo] for jamo in jamos[::3]]
+    ipa = [jamo for jamo in jamos[::3]]
+
+    return ipa
 
 
 def parse_rule(line):
