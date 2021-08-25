@@ -10,6 +10,9 @@ class PronounciationRule:
         self.phase = phase
         self.priority = priority
 
+    def __str__(self):
+        return f"{self.pattern} -> {self.substitution}"
+
 
 def g2p(text):
     """Convert text into IPA phonemes.
