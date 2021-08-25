@@ -30,8 +30,8 @@ def g2p(text):
     jamos, recovery_map = disassemble(text, out_type=str, include_position=True)
 
     for rules in rules_per_phase:
-        # fix[0] is the starting index of matched pronounciation rule.
-        fixes = {fix[0]: fix for fix in pronounciation_fixes(rules, jamos)}
+        # fix[1] is the starting index of matched pronounciation rule.
+        fixes = {fix[1]: fix for fix in pronounciation_fixes(rules, jamos)}
         jamos = list(apply_fixes(jamos, fixes))
     return jamos
 
@@ -67,8 +67,8 @@ def resolve_overlap(overlapped_fixes):
     prev_end_index = None
     for fix in sorted_fixes:
         rule, start_index, end_index = fix
-        if prev_end_index is not None and start_index > prev_end_index:
-            yield rule
+        if prev_end_index is None or start_index > prev_end_index:
+            yield fix
         prev_end_index = end_index
 
 
@@ -93,9 +93,9 @@ def apply_fixes(jamos, fixes):
         if rule is not None:
             yield rule.substitution[index_within_substitution]
             index_within_substitution += 1
-            if index_within_substitution >= end:
-                rule, start, end, index_within_substitution = None, None, None, 0
+            if index_within_substitution >= len(rule.substitution):
                 i = end
+                rule, start, end, index_within_substitution = None, None, None, 0
         else:
             yield jamo
 
