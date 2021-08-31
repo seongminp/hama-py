@@ -27,6 +27,7 @@ def g2p(text):
     jamos, recovery_map = jamo_level_g2p(text)
     # ipa = [jamo_to_ipa[jamo] for jamo in jamos[::3]]
     ipa = [jamo for jamo in jamos[::3]]
+    recovery_map = recovery_map[::3]
 
     return ipa, recovery_map
 
@@ -95,7 +96,6 @@ def apply_fixes(jamos, fixes, recovery_map):
     while i < len(jamos):
 
         jamo = jamos[i]
-        new_recovery_map.append(1)
 
         # Determine fixing/non-fixing state.
         if i in index_to_fix:
@@ -105,12 +105,14 @@ def apply_fixes(jamos, fixes, recovery_map):
         # Determine jamo to yield in this iteration.
         if rule is not None:
             new_jamos.append(rule.substitution[index_within_substitution])
+            new_recovery_map.append(recovery_map[i])
             index_within_substitution += 1
             if index_within_substitution >= len(rule.substitution):
                 i = end
                 rule, start, end, index_within_substitution = None, None, None, 0
         else:
             new_jamos.append(jamo)
+            new_recovery_map.append(recovery_map[i])
 
         i += 1
 
