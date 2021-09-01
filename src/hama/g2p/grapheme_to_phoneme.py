@@ -26,8 +26,8 @@ def g2p(text):
 
     jamos, recovery_map = jamo_level_g2p(text)
     # ipa = [jamo_to_ipa[jamo] for jamo in jamos[::3]]
-    ipa = [jamo for jamo in jamos[::3]]
-    recovery_map = recovery_map[::3]
+    ipa = [jamo for jamo in jamos]
+    recovery_map = recovery_map
 
     return ipa, recovery_map
 
@@ -43,7 +43,7 @@ def jamo_level_g2p(text):
         fixes = list(pronounciation_fixes(rules, jamos))
         jamos, recovery_map = list(apply_fixes(jamos, fixes, recovery_map))
 
-    return jamos, recovery_map
+    return jamos[::3], recovery_map[::3]
 
 
 def parse_rule(line):
