@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from hama import disassemble
 from hama.string_search import AhoCorasickAutomaton
 
@@ -12,6 +14,10 @@ class PronounciationRule:
 
     def __str__(self):
         return f"{self.pattern} -> {self.substitution}"
+
+
+class Phoneminizer:
+    pass
 
 
 def g2p(text):
@@ -33,14 +39,24 @@ def g2p(text):
 
 
 def jamo_level_g2p(text):
-    # with open('./p2g_rules.txt', 'r') as rf:
-    #    rules = rf.readlines()
-    rules_per_phase = [[PronounciationRule(21, "ㄴ/cㄹ/o", "ㄹ/cㄹ/o", 1, 1)]]
+    g2p_rules_path = Path(__file__).with_name("g2p_rules.txt")
+    with open(str(g2p_rules_path), "r") as rf:
+        rules = {}
+        for i, line in enumerate(rf):
+            # id, phase, priority, pattern, substitution = line.strip().split("|")
+            phase, priority, pattern, substitution = line.strip().split("|")
+            rule = PronounciationRule(i, pattern, substitution, phase, priority)
+            if phase in rules:
+                rules[phase].append(rule)
+            else:
+                rules[phase] = [rule]
+    # rules_per_phase = [[PronounciationRule(21, "ㄴ/cㄹ/o", "ㄹ/cㄹ/o", 1, 1)]]
     jamos, recovery_map = disassemble(text, out_type=str, include_position=True)
 
-    for rules in rules_per_phase:
+    for phase in sorted(rules.keys()):
         # fix[1] is the starting index of matched pronounciation rule.
-        fixes = list(pronounciation_fixes(rules, jamos))
+        phase_rules = rules[phase]
+        fixes = list(pronounciation_fixes(phase_rules, jamos))
         jamos, recovery_map = list(apply_fixes(jamos, fixes, recovery_map))
 
     return jamos[::3], recovery_map[::3]
