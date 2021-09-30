@@ -211,3 +211,106 @@ def test_disassemble_with_position():
         "ㄱ/x",
     ]
     assert disassemble("ㅓㅐㅔ", include_position=True)[0] == ["ㅓ/x", "ㅐ/x", "ㅔ/x"]
+
+
+def test_disassemble_with_whitespace():
+    assert disassemble("", include_whitespace=True)[0] == []
+    assert disassemble("5000원에 해주심", include_whitespace=True)[0] == [
+        "5",
+        "0",
+        "0",
+        "0",
+        "ㅇ",
+        "ㅝ",
+        "ㄴ",
+        "ㅇ",
+        "ㅔ",
+        " ",
+        "ㅎ",
+        "ㅐ",
+        "ㅈ",
+        "ㅜ",
+        "ㅅ",
+        "ㅣ",
+        "ㅁ",
+    ]
+    assert disassemble("쿨거래 가능.", include_whitespace=True)[0] == [
+        "ㅋ",
+        "ㅜ",
+        "ㄹ",
+        "ㄱ",
+        "ㅓ",
+        "ㄹ",
+        "ㅐ",
+        " ",
+        "ㄱ",
+        "ㅏ",
+        "ㄴ",
+        "ㅡ",
+        "ㅇ",
+        ".",
+    ]
+    assert disassemble("뭐라고요?", include_whitespace=True)[0] == [
+        "ㅁ",
+        "ㅝ",
+        "ㄹ",
+        "ㅏ",
+        "ㄱ",
+        "ㅗ",
+        "ㅇ",
+        "ㅛ",
+        "?",
+    ]
+    assert disassemble("비싼거 가타서..", include_whitespace=True)[0] == [
+        "ㅂ",
+        "ㅣ",
+        "ㅆ",
+        "ㅏ",
+        "ㄴ",
+        "ㄱ",
+        "ㅓ",
+        " ",
+        "ㄱ",
+        "ㅏ",
+        "ㅌ",
+        "ㅏ",
+        "ㅅ",
+        "ㅓ",
+        ".",
+        ".",
+    ]
+    assert disassemble("안돼요!", include_whitespace=True)[0] == [
+        "ㅇ",
+        "ㅏ",
+        "ㄴ",
+        "ㄷ",
+        "ㅙ",
+        "ㅇ",
+        "ㅛ",
+        "!",
+    ]
+    assert disassemble("싫어요!", include_whitespace=True)[0] == [
+        "ㅅ",
+        "ㅣ",
+        "ㅀ",
+        "ㅇ",
+        "ㅓ",
+        "ㅇ",
+        "ㅛ",
+        "!",
+    ]
+    assert disassemble("님 신고 ㅅㄱ", include_whitespace=True)[0] == [
+        "ㄴ",
+        "ㅣ",
+        "ㅁ",
+        " ",
+        "ㅅ",
+        "ㅣ",
+        "ㄴ",
+        "ㄱ",
+        "ㅗ",
+        " ",
+        "ㅅ",
+        "ㄱ",
+    ]
+    assert disassemble("ㅓㅐㅔ", include_whitespace=True)[0] == ["ㅓ", "ㅐ", "ㅔ"]

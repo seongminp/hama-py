@@ -9,16 +9,18 @@ from .constants import (
 )
 
 
-def disassemble(text, out_type=list, include_position=False):
+def disassemble(text, out_type=list, include_position=False, include_whitespace=False):
     """
     Deconstruct input text into Korean consonants and vowels.
 
     Args:
-        text              (str): Input string to deconstruct.
-        out_type         (type): [Optional, default: list] Output type. 
-                                 One of list and str.
-        include_position (bool): [Optional, default: False] Include position tags 
-                                 (/o for onset, /n for nucleus, /c for coda).
+        text                (str): Input string to deconstruct.
+        out_type           (type): [Optional, default: list] Output type. 
+                                   One of list and str.
+        include_position   (bool): [Optional, default: False] Include position tags 
+                                   (/o for onset, /n for nucleus, /c for coda).
+        include_whitespace (bool): [Optional, default: False] Include whitespace in output.
+                                   False by default to match other libraries.
 
     Returns:
         list/str: List of consonants and vowels. Symbols and foreign 
@@ -36,7 +38,7 @@ def disassemble(text, out_type=list, include_position=False):
 
     for i, c in enumerate(text):
 
-        if c.isspace():
+        if c.isspace() and not include_whitespace:
             continue
 
         code = ord(c)
