@@ -62,7 +62,8 @@ def disassemble(text, out_type=list, include_position=False, include_whitespace=
                 disassembled.append(jongsung_code)
 
         else:
-            disassembled = [f"{c}/x" if include_position else c]
+            position_marker = "w" if c.isspace() else "x"
+            disassembled = [f"{c}/{position_marker}" if include_position else c]
 
         for item in disassembled:
             if out_type == list:
