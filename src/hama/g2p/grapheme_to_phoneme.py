@@ -13,7 +13,7 @@ class PronounciationRule:
         self.priority = priority
 
     def __str__(self):
-        return f"{self.pattern} -> {self.substitution}"
+        return f"[{self.id}] {self.pattern} -> {self.substitution}"
 
 
 class Phoneminizer:
@@ -44,8 +44,8 @@ def jamo_level_g2p(text):
         rules = {}
         for i, line in enumerate(rf):
             # id, phase, priority, pattern, substitution = line.strip().split("|")
-            phase, priority, pattern, substitution = line.strip().split("|")
-            rule = PronounciationRule(i, pattern, substitution, phase, priority)
+            id, phase, priority, pattern, substitution = line.strip().split("|")
+            rule = PronounciationRule(id, pattern, substitution, phase, priority)
             if phase in rules:
                 rules[phase].append(rule)
             else:
