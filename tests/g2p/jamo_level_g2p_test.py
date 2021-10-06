@@ -26,7 +26,6 @@ def test_rule_10():
 
     assert jamo_level_g2p("넋") == disassemble("넉")
     assert jamo_level_g2p("넋과") == disassemble("넉꽈")
-    print("---")
     assert jamo_level_g2p("앉다") == disassemble("안따")
     assert jamo_level_g2p("여덟") == disassemble("여덜")
     assert jamo_level_g2p("넓다") == disassemble("널따")
