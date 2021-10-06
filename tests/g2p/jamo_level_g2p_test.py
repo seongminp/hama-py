@@ -23,26 +23,29 @@ def test_rule_9():
 
 
 def test_rule_10():
-    assert jamo_level_g2p("넋") == disassemble("넉")[0]
-    assert jamo_level_g2p("넋과") == disassemble("넉꽈")[0]
-    assert jamo_level_g2p("앉다") == disassemble("안따")[0]
-    assert jamo_level_g2p("여덟") == disassemble("여덜")[0]
-    assert jamo_level_g2p("넓다") == disassemble("널따")[0]
-    assert jamo_level_g2p("외곬") == disassemble("외골")[0]
-    assert jamo_level_g2p("핥다") == disassemble("할따")[0]
-    assert jamo_level_g2p("값") == disassemble("갑")[0]
-    assert jamo_level_g2p("없다") == disassemble("업따")[0]
+
+    assert jamo_level_g2p("넋") == disassemble("넉")
+    assert jamo_level_g2p("넋과") == disassemble("넉꽈")
+    print("---")
+    assert jamo_level_g2p("앉다") == disassemble("안따")
+    assert jamo_level_g2p("여덟") == disassemble("여덜")
+    assert jamo_level_g2p("넓다") == disassemble("널따")
+    assert jamo_level_g2p("외곬") == disassemble("외골")
+    assert jamo_level_g2p("핥다") == disassemble("할따")
+    assert jamo_level_g2p("값") == disassemble("갑")
+    assert jamo_level_g2p("없다") == disassemble("업따")
 
 
 def test_rule_10_exception_1():
-    assert jamo_level_g2p("밟다") == disassemble("밥따")[0]
-    assert jamo_level_g2p("밟소") == disassemble("밥쏘")[0]
-    assert jamo_level_g2p("밟지") == disassemble("밥찌")[0]
-    assert jamo_level_g2p("밟는") == disassemble("밤는")[0]
-    assert jamo_level_g2p("밟게") == disassemble("밥께")[0]
-    assert jamo_level_g2p("밟고") == disassemble("밥꼬")[0]
-    assert jamo_level_g2p("넓죽하다") == disassemble("넙쭈카다")[0]
-    assert jamo_level_g2p("넓둥글다") == disassemble("넙뚱글다")[0]
+    assert jamo_level_g2p("밟다") == disassemble("밥따")
+    assert jamo_level_g2p("밟소") == disassemble("밥쏘")
+    assert jamo_level_g2p("밟지") == disassemble("밥찌")
+    assert jamo_level_g2p("밟는") == disassemble("밤는")
+    assert jamo_level_g2p("밟게") == disassemble("밥께")
+    assert jamo_level_g2p("밟고") == disassemble("밥꼬")
+    # Source position of merged phonemes is ambiguous.
+    assert jamo_level_g2p("넓죽하다")[0] == disassemble("넙쭈카다")[0]
+    assert jamo_level_g2p("넓둥글다") == disassemble("넙뚱글다")
 
 
 def test_rule_11():
