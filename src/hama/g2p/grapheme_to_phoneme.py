@@ -5,7 +5,7 @@ from hama.string_search import AhoCorasickAutomaton
 
 
 class PronounciationRule:
-    def __init__(self, id, pattern, substitution, priority=1, phase=1):
+    def __init__(self, id, pattern, substitution, phase=1, priority=1):
         self.id = id
         self.pattern = pattern
         self.substitution = substitution
@@ -43,7 +43,6 @@ def jamo_level_g2p(text):
     with open(str(g2p_rules_path), "r") as rf:
         rules = {}
         for i, line in enumerate(rf):
-            # id, phase, priority, pattern, substitution = line.strip().split("|")
             id, phase, priority, pattern, substitution = line.strip().split("|")
             rule = PronounciationRule(id, pattern, substitution, phase, priority)
             if phase in rules:
