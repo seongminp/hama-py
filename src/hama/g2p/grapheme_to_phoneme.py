@@ -94,7 +94,7 @@ def resolve_overlap(overlapped_fixes):
         rule, start_index, end_index = fix
         if prev_end_index is None or start_index > prev_end_index:
             yield fix
-        prev_end_index = end_index
+            prev_end_index = end_index
 
 
 def apply_fixes(jamos, fixes, recovery_map):
