@@ -56,6 +56,7 @@ def jamo_level_g2p(text):
         # fix[1] is the starting index of matched pronounciation rule.
         phase_rules = rules[phase]
         fixes = list(pronounciation_fixes(phase_rules, jamos))
+        fixes = resolve_overlap(fixes)
         jamos, recovery_map = list(apply_fixes(jamos, fixes, recovery_map))
 
     return jamos[::3], recovery_map[::3]
@@ -77,13 +78,7 @@ def pronounciation_fixes(rules, jamos):
     for found_rule in ac.search(jamos):
         pattern, start_index, end_index = found_rule
         fix = (pattern_to_rule[pattern], start_index, end_index)
-        if prev_end_index is not None and start_index <= prev_end_index:
-            overlapped_fixes.append(fix)
-        else:
-            yield from resolve_overlap(overlapped_fixes)
-            overlapped_fixes = [fix]
-        prev_end_index = end_index
-    yield from resolve_overlap(overlapped_fixes)
+        yield fix
 
 
 def resolve_overlap(overlapped_fixes):
