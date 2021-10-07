@@ -48,14 +48,14 @@ def test_rule_10_exception_1():
 
 
 def test_rule_11():
-    assert jamo_level_g2p("닭") == disassemble("닥")[0]
-    assert jamo_level_g2p("흙과") == disassemble("흑꽈")[0]
-    assert jamo_level_g2p("맑다") == disassemble("막따")[0]
-    assert jamo_level_g2p("늙지") == disassemble("늑찌")[0]
-    assert jamo_level_g2p("삶") == disassemble("삼")[0]
-    assert jamo_level_g2p("젊다") == disassemble("점따")[0]
-    assert jamo_level_g2p("읊고") == disassemble("읍꼬")[0]
-    assert jamo_level_g2p("읊다") == disassemble("읍따")[0]
+    assert jamo_level_g2p("닭") == disassemble("닥")
+    assert jamo_level_g2p("흙과") == disassemble("흑꽈")
+    assert jamo_level_g2p("맑다") == disassemble("막따")
+    assert jamo_level_g2p("늙지") == disassemble("늑찌")
+    assert jamo_level_g2p("삶") == disassemble("삼")
+    assert jamo_level_g2p("젊다") == disassemble("점따")
+    assert jamo_level_g2p("읊고") == disassemble("읍꼬")
+    assert jamo_level_g2p("읊다") == disassemble("읍따")
 
 
 def test_rule_12_1():
