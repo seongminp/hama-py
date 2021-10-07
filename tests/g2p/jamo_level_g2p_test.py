@@ -59,58 +59,65 @@ def test_rule_11():
 
 
 def test_rule_12_1():
-    assert jamo_level_g2p("놓고") == disassemble("노코")[0]
-    assert jamo_level_g2p("좋던") == disassemble("조턴")[0]
-    assert jamo_level_g2p("쌓지") == disassemble("싸치")[0]
-    assert jamo_level_g2p("많고") == disassemble("만코")[0]
-    assert jamo_level_g2p("않던") == disassemble("안턴")[0]
-    assert jamo_level_g2p("닳지") == disassemble("달치")[0]
+    # Source position of merged phonemes is ambiguous.
+    assert jamo_level_g2p("놓고")[0] == disassemble("노코")[0]
+    assert jamo_level_g2p("좋던")[0] == disassemble("조턴")[0]
+    assert jamo_level_g2p("쌓지")[0] == disassemble("싸치")[0]
+    assert jamo_level_g2p("많고")[0] == disassemble("만코")[0]
+    assert jamo_level_g2p("않던")[0] == disassemble("안턴")[0]
+    assert jamo_level_g2p("닳지")[0] == disassemble("달치")[0]
 
 
 def test_rule_12_1_addition_1():
-    assert jamo_level_g2p("각하") == disassemble("가카")[0]
-    assert jamo_level_g2p("먹히다") == disassemble("머키다")[0]
-    assert jamo_level_g2p("밟히다") == disassemble("발피다")[0]
-    assert jamo_level_g2p("맏형") == disassemble("마텽")[0]
-    assert jamo_level_g2p("좁히다") == disassemble("조피다")[0]
-    assert jamo_level_g2p("넓히다") == disassemble("널피다")[0]
-    assert jamo_level_g2p("꽂히다") == disassemble("꼬치다")[0]
-    assert jamo_level_g2p("앉히다") == disassemble("안치다")[0]
+    # Source position of merged phonemes is ambiguous.
+    assert jamo_level_g2p("각하")[0] == disassemble("가카")[0]
+    assert jamo_level_g2p("먹히다")[0] == disassemble("머키다")[0]
+    assert jamo_level_g2p("밟히다")[0] == disassemble("발피다")[0]
+    assert jamo_level_g2p("맏형")[0] == disassemble("마텽")[0]
+    assert jamo_level_g2p("좁히다")[0] == disassemble("조피다")[0]
+    assert jamo_level_g2p("넓히다")[0] == disassemble("널피다")[0]
+    assert jamo_level_g2p("꽂히다")[0] == disassemble("꼬치다")[0]
+    assert jamo_level_g2p("앉히다")[0] == disassemble("안치다")[0]
 
 
-# def test_rule_12_addition_2:
-#    assert jamo_level_g2p("옷한벌") == disassemble("오탄벌")[0]
-#    assert jamo_level_g2p("한때") == disassemble("나탄때")[0]
-#    assert jamo_level_g2p("송이") == disassemble("꼬탄송이")[0]
-#    assert jamo_level_g2p("숱하다") == disassemble("수타다")[0]
+def test_rule_12_addition_2():
+    # Source position of merged phonemes is ambiguous.
+    assert jamo_level_g2p("옷 한 벌")[0] == disassemble("오탄벌")[0]
+    assert jamo_level_g2p("낮 한때")[0] == disassemble("나탄때")[0]
+    assert jamo_level_g2p("꽃 한 송이")[0] == disassemble("꼬탄송이")[0]
+    assert jamo_level_g2p("숱하다")[0] == disassemble("수타다")[0]
 
 
 def test_rule_12_2():
-    assert jamo_level_g2p("닿소") == disassemble("다쏘")[0]
-    assert jamo_level_g2p("많소") == disassemble("만쏘")[0]
-    assert jamo_level_g2p("싫소") == disassemble("실쏘")[0]
+    # Source position of merged phonemes is ambiguous.
+    assert jamo_level_g2p("닿소")[0] == disassemble("다쏘")[0]
+    assert jamo_level_g2p("많소")[0] == disassemble("만쏘")[0]
+    assert jamo_level_g2p("싫소")[0] == disassemble("실쏘")[0]
 
 
 def test_rule_12_3():
-    assert jamo_level_g2p("놓는") == disassemble("논는")[0]
-    assert jamo_level_g2p("쌓네") == disassemble("싼네")[0]
+    # Source position of merged phonemes is ambiguous.
+    assert jamo_level_g2p("놓는")[0] == disassemble("논는")[0]
+    assert jamo_level_g2p("쌓네")[0] == disassemble("싼네")[0]
 
 
 def test_rule_12_3_addition_1():
-    assert jamo_level_g2p("않네") == disassemble("안네")[0]
-    assert jamo_level_g2p("않는") == disassemble("안는")[0]
-    assert jamo_level_g2p("뚫네") == disassemble("뚤레")[0]
-    assert jamo_level_g2p("뚫는") == disassemble("뚤른")[0]
+    # Source position of merged phonemes is ambiguous.
+    assert jamo_level_g2p("않네")[0] == disassemble("안네")[0]
+    assert jamo_level_g2p("않는")[0] == disassemble("안는")[0]
+    assert jamo_level_g2p("뚫네")[0] == disassemble("뚤레")[0]
+    assert jamo_level_g2p("뚫는")[0] == disassemble("뚤른")[0]
 
 
 def test_rule_12_4():
-    assert jamo_level_g2p("낳은") == disassemble("나은")[0]
-    assert jamo_level_g2p("놓아") == disassemble("노아")[0]
-    assert jamo_level_g2p("쌓이다") == disassemble("싸이다")[0]
-    assert jamo_level_g2p("많아") == disassemble("마나")[0]
-    assert jamo_level_g2p("않은") == disassemble("아는")[0]
-    assert jamo_level_g2p("닳아") == disassemble("다라")[0]
-    assert jamo_level_g2p("싫어도") == disassemble("시러도")[0]
+    # Source position of merged phonemes is ambiguous.
+    assert jamo_level_g2p("낳은")[0] == disassemble("나은")[0]
+    assert jamo_level_g2p("놓아")[0] == disassemble("노아")[0]
+    assert jamo_level_g2p("쌓이다")[0] == disassemble("싸이다")[0]
+    assert jamo_level_g2p("많아")[0] == disassemble("마나")[0]
+    assert jamo_level_g2p("않은")[0] == disassemble("아는")[0]
+    assert jamo_level_g2p("닳아")[0] == disassemble("다라")[0]
+    assert jamo_level_g2p("싫어도")[0] == disassemble("시러도")[0]
 
 
 def test_rule_13():
