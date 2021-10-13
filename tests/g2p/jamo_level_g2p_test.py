@@ -121,28 +121,29 @@ def test_rule_12_4():
 
 
 def test_rule_13():
-    assert jamo_level_g2p("깎아") == disassemble("까까")[0]
-    assert jamo_level_g2p("옷이") == disassemble("오시")[0]
-    assert jamo_level_g2p("있어") == disassemble("이써")[0]
-    assert jamo_level_g2p("낮이") == disassemble("나지")[0]
-    assert jamo_level_g2p("꽂아") == disassemble("꼬자")[0]
-    assert jamo_level_g2p("꽃을") == disassemble("꼬츨")[0]
-    assert jamo_level_g2p("쫓아") == disassemble("쪼차")[0]
-    assert jamo_level_g2p("밭에") == disassemble("바테")[0]
-    assert jamo_level_g2p("앞으로") == disassemble("아프로")[0]
-    assert jamo_level_g2p("덮이다") == disassemble("더피다")[0]
+    # Source position of merged phonemes is ambiguous.
+    assert jamo_level_g2p("깎아")[0] == disassemble("까까")[0]
+    assert jamo_level_g2p("옷이")[0] == disassemble("오시")[0]
+    assert jamo_level_g2p("있어")[0] == disassemble("이써")[0]
+    assert jamo_level_g2p("낮이")[0] == disassemble("나지")[0]
+    assert jamo_level_g2p("꽂아")[0] == disassemble("꼬자")[0]
+    assert jamo_level_g2p("꽃을")[0] == disassemble("꼬츨")[0]
+    assert jamo_level_g2p("쫓아")[0] == disassemble("쪼차")[0]
+    assert jamo_level_g2p("밭에")[0] == disassemble("바테")[0]
+    assert jamo_level_g2p("앞으로")[0] == disassemble("아프로")[0]
+    assert jamo_level_g2p("덮이다")[0] == disassemble("더피다")[0]
 
 
 def test_rule_14():
-    assert jamo_level_g2p("넋이") == disassemble("넉씨")[0]
-    assert jamo_level_g2p("앉아") == disassemble("안자")[0]
-    assert jamo_level_g2p("닭을") == disassemble("달글")[0]
-    assert jamo_level_g2p("젊어") == disassemble("절머")[0]
-    assert jamo_level_g2p("곬이") == disassemble("골씨")[0]
-    assert jamo_level_g2p("핥아") == disassemble("할타")[0]
-    assert jamo_level_g2p("읊어") == disassemble("을퍼")[0]
-    assert jamo_level_g2p("값을") == disassemble("갑쓸")[0]
-    assert jamo_level_g2p("없어") == disassemble("업써")[0]
+    assert jamo_level_g2p("넋이") == disassemble("넉씨")
+    assert jamo_level_g2p("앉아") == disassemble("안자")
+    assert jamo_level_g2p("닭을") == disassemble("달글")
+    assert jamo_level_g2p("젊어") == disassemble("절머")
+    assert jamo_level_g2p("곬이") == disassemble("골씨")
+    assert jamo_level_g2p("핥아") == disassemble("할타")
+    assert jamo_level_g2p("읊어") == disassemble("을퍼")
+    assert jamo_level_g2p("값을") == disassemble("갑쓸")
+    assert jamo_level_g2p("없어") == disassemble("업써")
 
 
 # def test_rule_15:
