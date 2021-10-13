@@ -157,12 +157,13 @@ def test_rule_14():
 
 
 def test_rule_17():
-    assert jamo_level_g2p("곧이듣다") == disassemble("고지듣따")[0]
-    assert jamo_level_g2p("굳이") == disassemble("구지")[0]
-    assert jamo_level_g2p("미닫이") == disassemble("미다지")[0]
-    assert jamo_level_g2p("땀받이") == disassemble("땀바지")[0]
-    assert jamo_level_g2p("밭이") == disassemble("바치")[0]
-    assert jamo_level_g2p("벼훑이") == disassemble("벼훌치")[0]
+    # Source position of merged phonemes is ambiguous.
+    assert jamo_level_g2p("곧이듣다")[0] == disassemble("고지듣따")[0]
+    assert jamo_level_g2p("굳이")[0] == disassemble("구지")[0]
+    assert jamo_level_g2p("미닫이")[0] == disassemble("미다지")[0]
+    assert jamo_level_g2p("땀받이")[0] == disassemble("땀바지")[0]
+    assert jamo_level_g2p("밭이")[0] == disassemble("바치")[0]
+    assert jamo_level_g2p("벼훑이")[0] == disassemble("벼훌치")[0]
 
 
 def test_rule_17_addition_1():
