@@ -10,6 +10,7 @@ def test_rule_9():
     assert jamo_level_g2p("키읔과") == disassemble("키윽꽈")
     assert jamo_level_g2p("옷") == disassemble("옫")
     # Maybe the correct pronounciation is "우따" (according to rule 30.1).
+    # We omit rule 24.
     # assert jamo_level_g2p("웃다") == disassemble("욷따")
     assert jamo_level_g2p("있다") == disassemble("읻따")
     assert jamo_level_g2p("젖") == disassemble("젇")
@@ -23,16 +24,19 @@ def test_rule_9():
 
 
 def test_rule_10():
-
     assert jamo_level_g2p("넋") == disassemble("넉")
     assert jamo_level_g2p("넋과") == disassemble("넉꽈")
-    assert jamo_level_g2p("앉다") == disassemble("안따")
+    # We omit rule 24.
+    # assert jamo_level_g2p("앉다") == disassemble("안따")
     assert jamo_level_g2p("여덟") == disassemble("여덜")
-    assert jamo_level_g2p("넓다") == disassemble("널따")
+    # We omit rule 24.
+    # assert jamo_level_g2p("넓다") == disassemble("널따")
     assert jamo_level_g2p("외곬") == disassemble("외골")
-    assert jamo_level_g2p("핥다") == disassemble("할따")
+    # We omit rule 24.
+    # assert jamo_level_g2p("핥다") == disassemble("할따")
     assert jamo_level_g2p("값") == disassemble("갑")
-    assert jamo_level_g2p("없다") == disassemble("업따")
+    # We omit rule 24.
+    # assert jamo_level_g2p("없다") == disassemble("업따")
 
 
 def test_rule_10_exception_1():
@@ -50,12 +54,15 @@ def test_rule_10_exception_1():
 def test_rule_11():
     assert jamo_level_g2p("닭") == disassemble("닥")
     assert jamo_level_g2p("흙과") == disassemble("흑꽈")
-    assert jamo_level_g2p("맑다") == disassemble("막따")
+    # We omit rule 24.
+    # assert jamo_level_g2p("맑다") == disassemble("막따")
     assert jamo_level_g2p("늙지") == disassemble("늑찌")
     assert jamo_level_g2p("삶") == disassemble("삼")
-    assert jamo_level_g2p("젊다") == disassemble("점따")
+    # We omit rule 24.
+    # assert jamo_level_g2p("젊다") == disassemble("점따")
     assert jamo_level_g2p("읊고") == disassemble("읍꼬")
-    assert jamo_level_g2p("읊다") == disassemble("읍따")
+    # We omit rule 24.
+    # assert jamo_level_g2p("읊다") == disassemble("읍따")
 
 
 def test_rule_12_1():
@@ -167,92 +174,108 @@ def test_rule_17():
 
 
 def test_rule_17_addition_1():
-    assert jamo_level_g2p("굳히다") == disassemble("구치다")[0]
-    assert jamo_level_g2p("닫히다") == disassemble("다치다")[0]
-    assert jamo_level_g2p("묻히다") == disassemble("무치다")[0]
+    # Source position of merged phonemes is ambiguous.
+    assert jamo_level_g2p("굳히다")[0] == disassemble("구치다")[0]
+    assert jamo_level_g2p("닫히다")[0] == disassemble("다치다")[0]
+    assert jamo_level_g2p("묻히다")[0] == disassemble("무치다")[0]
 
 
 def test_rule_18():
-    assert jamo_level_g2p("먹는") == disassemble("멍는")[0]
-    assert jamo_level_g2p("국물") == disassemble("궁물")[0]
-    assert jamo_level_g2p("깎는") == disassemble("깡는")[0]
-    assert jamo_level_g2p("키읔만") == disassemble("키응만")[0]
-    assert jamo_level_g2p("몫몫이") == disassemble("몽목씨")[0]
-    assert jamo_level_g2p("긁는") == disassemble("긍는")[0]
-    assert jamo_level_g2p("흙만") == disassemble("흥만")[0]
-    assert jamo_level_g2p("닫는") == disassemble("단는")[0]
-    assert jamo_level_g2p("짓는") == disassemble("진는")[0]
-    assert jamo_level_g2p("옷맵시") == disassemble("온맵시")[0]
-    assert jamo_level_g2p("있는") == disassemble("인는")[0]
-    assert jamo_level_g2p("맞는") == disassemble("만는")[0]
-    assert jamo_level_g2p("젖멍울") == disassemble("전멍울")[0]
-    assert jamo_level_g2p("쫓는") == disassemble("쫀는")[0]
-    assert jamo_level_g2p("꽃망울") == disassemble("꼰망울")[0]
-    assert jamo_level_g2p("붙는") == disassemble("분는")[0]
-    assert jamo_level_g2p("놓는") == disassemble("논는")[0]
-    assert jamo_level_g2p("잡는") == disassemble("잠는")[0]
-    assert jamo_level_g2p("밥물") == disassemble("밤물")[0]
-    assert jamo_level_g2p("앞마당") == disassemble("암마당")[0]
-    assert jamo_level_g2p("밟는") == disassemble("밤는")[0]
-    assert jamo_level_g2p("읊는") == disassemble("음는")[0]
-    assert jamo_level_g2p("없는") == disassemble("엄는")[0]
-    assert jamo_level_g2p("값매다") == disassemble("감매다")[0]
+    # Source position of merged phonemes is ambiguous.
+    assert jamo_level_g2p("먹는") == disassemble("멍는")
+    assert jamo_level_g2p("국물") == disassemble("궁물")
+    assert jamo_level_g2p("깎는") == disassemble("깡는")
+    assert jamo_level_g2p("키읔만") == disassemble("키응만")
+    assert jamo_level_g2p("몫몫이") == disassemble("몽목씨")
+    assert jamo_level_g2p("긁는") == disassemble("긍는")
+    assert jamo_level_g2p("흙만") == disassemble("흥만")
+    assert jamo_level_g2p("닫는") == disassemble("단는")
+    assert jamo_level_g2p("짓는") == disassemble("진는")
+    # 표준발음법 예시 틀림.
+    assert jamo_level_g2p("옷맵시") == disassemble("온맵씨")
+    assert jamo_level_g2p("있는") == disassemble("인는")
+    assert jamo_level_g2p("맞는") == disassemble("만는")
+    assert jamo_level_g2p("젖멍울") == disassemble("전멍울")
+    assert jamo_level_g2p("쫓는") == disassemble("쫀는")
+    assert jamo_level_g2p("꽃망울") == disassemble("꼰망울")
+    assert jamo_level_g2p("붙는") == disassemble("분는")
+    assert jamo_level_g2p("놓는") == disassemble("논는")
+    assert jamo_level_g2p("잡는") == disassemble("잠는")
+    assert jamo_level_g2p("밥물") == disassemble("밤물")
+    assert jamo_level_g2p("앞마당") == disassemble("암마당")
+    assert jamo_level_g2p("밟는") == disassemble("밤는")
+    assert jamo_level_g2p("읊는") == disassemble("음는")
+    assert jamo_level_g2p("없는") == disassemble("엄는")
+    assert jamo_level_g2p("값매다") == disassemble("감매다")
+
+
+def test_rule_18_addition_1():
+    assert jamo_level_g2p("책넣는다") == disassemble("챙넌는다")
+    assert jamo_level_g2p("흙말리다") == disassemble("흥말리다")
+    # 표준발음법 예시 틀림.
+    assert jamo_level_g2p("옷맞추다") == disassemble("온맏추다")
+    assert jamo_level_g2p("밥먹는다") == disassemble("밤멍는다")
+    assert jamo_level_g2p("값매기다") == disassemble("감매기다")
 
 
 def test_rule_19():
-    assert jamo_level_g2p("담력") == disassemble("담녁")[0]
-    assert jamo_level_g2p("침략") == disassemble("침냑")[0]
-    assert jamo_level_g2p("강릉") == disassemble("강능")[0]
-    assert jamo_level_g2p("항로") == disassemble("항노")[0]
-    assert jamo_level_g2p("대통령") == disassemble("대통녕")[0]
+    assert jamo_level_g2p("담력") == disassemble("담녁")
+    assert jamo_level_g2p("침략") == disassemble("침냑")
+    assert jamo_level_g2p("강릉") == disassemble("강능")
+    assert jamo_level_g2p("항로") == disassemble("항노")
+    assert jamo_level_g2p("대통령") == disassemble("대통녕")
 
 
 def test_rule_19_addition_1():
-    assert jamo_level_g2p("막론") == disassemble("망논")[0]
-    assert jamo_level_g2p("백리") == disassemble("뱅니")[0]
-    assert jamo_level_g2p("협력") == disassemble("혐녁")[0]
-    assert jamo_level_g2p("십리") == disassemble("심니")[0]
+    assert jamo_level_g2p("막론") == disassemble("망논")
+    assert jamo_level_g2p("백리") == disassemble("뱅니")
+    assert jamo_level_g2p("협력") == disassemble("혐녁")
+    assert jamo_level_g2p("십리") == disassemble("심니")
 
 
 def test_rule_20():
-    assert jamo_level_g2p("난로") == disassemble("날로")[0]
-    assert jamo_level_g2p("신라") == disassemble("실라")[0]
-    assert jamo_level_g2p("천리") == disassemble("철리")[0]
-    assert jamo_level_g2p("광한루") == disassemble("광할루")[0]
-    assert jamo_level_g2p("대관령") == disassemble("대괄령")[0]
-    assert jamo_level_g2p("칼날") == disassemble("칼랄")[0]
-    assert jamo_level_g2p("물난리") == disassemble("물랄리")[0]
-    assert jamo_level_g2p("줄넘기") == disassemble("줄럼끼")[0]
-    assert jamo_level_g2p("할는지") == disassemble("할른지")[0]
+    assert jamo_level_g2p("난로") == disassemble("날로")
+    assert jamo_level_g2p("신라") == disassemble("실라")
+    assert jamo_level_g2p("천리") == disassemble("철리")
+    assert jamo_level_g2p("광한루") == disassemble("광할루")
+    assert jamo_level_g2p("대관령") == disassemble("대괄령")
+    assert jamo_level_g2p("칼날") == disassemble("칼랄")
+    assert jamo_level_g2p("물난리") == disassemble("물랄리")
+    # We omit rule 24.
+    # assert jamo_level_g2p("줄넘기") == disassemble("줄럼끼")
+    assert jamo_level_g2p("할는지") == disassemble("할른지")
 
 
 def test_rule_20_addition_1():
-    assert jamo_level_g2p("닳는") == disassemble("달른")[0]
-    assert jamo_level_g2p("뚫는") == disassemble("뚤른")[0]
-    assert jamo_level_g2p("핥네") == disassemble("할레")[0]
+    assert jamo_level_g2p("닳는") == disassemble("달른")
+    assert jamo_level_g2p("뚫는") == disassemble("뚤른")
+    assert jamo_level_g2p("핥네") == disassemble("할레")
 
 
 def test_rule_23():
-    assert jamo_level_g2p("국밥") == disassemble("국빱")[0]
-    assert jamo_level_g2p("깎다") == disassemble("깍따")[0]
-    assert jamo_level_g2p("넔받이") == disassemble("넉빠지")[0]
-    assert jamo_level_g2p("삯돈") == disassemble("삭똔")[0]
-    assert jamo_level_g2p("닭장") == disassemble("닥짱")[0]
-    assert jamo_level_g2p("칡범") == disassemble("칙뻠")[0]
-    assert jamo_level_g2p("뻗대다") == disassemble("뻗때다")[0]
-    assert jamo_level_g2p("옷고름") == disassemble("옫꼬름")[0]
-    assert jamo_level_g2p("있던") == disassemble("읻떤")[0]
-    assert jamo_level_g2p("꽂고") == disassemble("꼳꼬")[0]
-    assert jamo_level_g2p("꽃다발") == disassemble("꼳따발")[0]
-    assert jamo_level_g2p("낯설다") == disassemble("낟썰다")[0]
-    assert jamo_level_g2p("밭갈이") == disassemble("받까리")[0]
+    print(jamo_level_g2p("옷고름"))
+    print("---")
+    assert jamo_level_g2p("국밥") == disassemble("국빱")
+    assert jamo_level_g2p("깎다") == disassemble("깍따")
+    # Source position of merged phonemes is ambiguous.
+    assert jamo_level_g2p("넋받이")[0] == disassemble("넉빠지")[0]
+    assert jamo_level_g2p("삯돈") == disassemble("삭똔")
+    assert jamo_level_g2p("닭장") == disassemble("닥짱")
+    assert jamo_level_g2p("칡범") == disassemble("칙뻠")
+    assert jamo_level_g2p("뻗대다") == disassemble("뻗때다")
+    assert jamo_level_g2p("옷고름") == disassemble("옫꼬름")
+    assert jamo_level_g2p("있던") == disassemble("읻떤")
+    assert jamo_level_g2p("꽂고") == disassemble("꼳꼬")
+    assert jamo_level_g2p("꽃다발") == disassemble("꼳따발")
+    assert jamo_level_g2p("낯설다") == disassemble("낟썰다")
+    assert jamo_level_g2p("밭갈이") == disassemble("받까리")
     assert jamo_level_g2p("솥전") == disassemble("솓쩐")
-    assert jamo_level_g2p("곱돌") == disassemble("곱똘")[0]
-    assert jamo_level_g2p("덮개") == disassemble("덥깨")[0]
-    assert jamo_level_g2p("옆집") == disassemble("엽찝")[0]
-    assert jamo_level_g2p("넓죽하다") == disassemble("넙쭈카다")[0]
-    assert jamo_level_g2p("읊조리다") == disassemble("읍쪼리다")[0]
-    assert jamo_level_g2p("값지다") == disassemble("갑찌다")[0]
+    assert jamo_level_g2p("곱돌") == disassemble("곱똘")
+    assert jamo_level_g2p("덮개") == disassemble("덥깨")
+    assert jamo_level_g2p("옆집") == disassemble("엽찝")
+    assert jamo_level_g2p("넓죽하다") == disassemble("넙쭈카다")
+    assert jamo_level_g2p("읊조리다") == disassemble("읍쪼리다")
+    assert jamo_level_g2p("값지다") == disassemble("갑찌다")
 
 
 def test_rule_24():
