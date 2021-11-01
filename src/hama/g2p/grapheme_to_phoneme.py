@@ -51,7 +51,6 @@ def jamo_level_g2p(text):
                 rules[phase] = [rule]
     # rules_per_phase = [[PronounciationRule(21, "ㄴ/cㄹ/o", "ㄹ/cㄹ/o", 1, 1)]]
     jamos, recovery_map = disassemble(text, out_type=str, include_position=True)
-    print(jamos)
 
     for phase in sorted(rules.keys()):
         # fix[1] is the starting index of matched pronounciation rule.
@@ -92,12 +91,10 @@ def pronounciation_fixes(rules, jamos):
 def resolve_overlap(overlapped_fixes):
     # Sort by priority (fix[0].priority) and fix start index (fix[1]).
     sorted_fixes = sorted(overlapped_fixes, key=lambda x: (x[0].priority, x[1]))
-    print("l", [f[0].id for f in sorted_fixes])
     prev_end_index = None
     for fix in sorted_fixes:
         rule, start_index, end_index = fix
         if prev_end_index is None or start_index > prev_end_index:
-            print("yielding", fix[0].id)
             yield fix
             prev_end_index = end_index
 
