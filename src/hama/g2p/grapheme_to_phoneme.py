@@ -70,7 +70,13 @@ def parse_rule(line):
 
 def pronounciation_fixes(rules, jamos):
 
-    pattern_to_rule = {rule.pattern: rule for rule in rules}
+    pattern_to_rules = {}
+    # We don't use a defaultdict here to reduce dependency.
+    for rule in rules:
+        if rule.pattern in pattern_to_rules:
+            pattern_to_rules[rule.pattern].append(rule)
+        else:
+            pattern_to_rules[rule.pattern] = [rule]
 
     ac = AhoCorasickAutomaton()
     ac.add_words([rule.pattern for rule in rules])
@@ -78,14 +84,15 @@ def pronounciation_fixes(rules, jamos):
     overlapped_fixes, prev_end_index = [], None
     for found_rule in ac.search(jamos):
         pattern, start_index, end_index = found_rule
-        fix = (pattern_to_rule[pattern], start_index, end_index)
-        yield fix
+        for rule in pattern_to_rules[pattern]:
+            fix = (rule, start_index, end_index)
+            yield fix
 
 
 def resolve_overlap(overlapped_fixes):
     # Sort by priority (fix[0].priority) and fix start index (fix[1]).
     sorted_fixes = sorted(overlapped_fixes, key=lambda x: (x[0].priority, x[1]))
-    print([f[0].id for f in sorted_fixes])
+    print("l", [f[0].id for f in sorted_fixes])
     prev_end_index = None
     for fix in sorted_fixes:
         rule, start_index, end_index = fix
