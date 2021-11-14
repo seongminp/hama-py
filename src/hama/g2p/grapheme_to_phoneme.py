@@ -32,7 +32,7 @@ def g2p(text):
 
     jamos, recovery_map = jamo_level_g2p(text)
     # ipa = [jamo_to_ipa[jamo] for jamo in jamos[::3]]
-    ipa = [jamo for jamo in jamos]
+    # ipa = [jamo for jamo in jamos]
     recovery_map = recovery_map
 
     return ipa, recovery_map
@@ -50,14 +50,17 @@ def jamo_level_g2p(text):
             else:
                 rules[phase] = [rule]
     # rules_per_phase = [[PronounciationRule(21, "ㄴ/cㄹ/o", "ㄹ/cㄹ/o", 1, 1)]]
-    jamos, recovery_map = disassemble(text, out_type=str, include_position=True)
+    jamos, recovery_map = disassemble(text, include_position=True)
+    jamos = "".join(f"{c}/{p}" for c, p in jamos)
+    # Jamos becomes three times longer.
+    recovery_map = [r for r in recovery_map for i in range(3)]
 
     for phase in sorted(rules.keys()):
         # fix[1] is the starting index of matched pronounciation rule.
         phase_rules = rules[phase]
         fixes = list(pronounciation_fixes(phase_rules, jamos))
         fixes = resolve_overlap(fixes)
-        jamos, recovery_map = list(apply_fixes(jamos, fixes, recovery_map))
+        jamos, recovery_map = apply_fixes(jamos, fixes, recovery_map)
 
     return jamos[::3], recovery_map[::3]
 
