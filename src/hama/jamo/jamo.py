@@ -32,6 +32,8 @@ def disassemble(text, out_type=list, include_position=False, include_whitespace=
         out = list()
     elif out_type == str:
         out = ""
+        if include_position:
+            raise Exception(f"Cannot specify include_position=True then out_type=str.")
     else:
         raise Exception(f"Wrong output type: {out_type}.")
     recovery_map = list()
@@ -52,10 +54,10 @@ def disassemble(text, out_type=list, include_position=False, include_whitespace=
 
             # Add position markers.
             if include_position:
-                chosung_code += "/o"
-                joongsung_code += "/n"
+                chosung_code = (chosung_code, "o")
+                joongsung_code = (joongsung_code, "n")
                 if jongsung_code:
-                    jongsung_code += "/c"
+                    jongsung_code = (jongsung_code, "c")
 
             disassembled = [chosung_code, joongsung_code]
             if jongsung_code:
@@ -63,7 +65,7 @@ def disassemble(text, out_type=list, include_position=False, include_whitespace=
 
         else:
             position_marker = "w" if c.isspace() else "x"
-            disassembled = [f"{c}/{position_marker}" if include_position else c]
+            disassembled = [(c, position_marker) if include_position else c]
 
         for item in disassembled:
             if out_type == list:
