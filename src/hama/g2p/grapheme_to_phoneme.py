@@ -19,6 +19,13 @@ class PronounciationRule:
 class Phoneminizer:
     pass
 
+    def jamo_to_ipa(jamo, position=None):
+        if position is None:
+            position = "o"
+        if self.jamo_table.get(jamo).get(position) is None:
+            raise Exception
+        return self.jamo_table[jamo][position]
+
 
 def g2p(text):
     """Convert text into IPA phonemes.

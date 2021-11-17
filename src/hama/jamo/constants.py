@@ -97,3 +97,7 @@ both_chosung_and_jongsung = [
     "ㄷ",
     "ㄱ",
 ]
+
+chosung_index = {c: i for c, i in enumerate(chosungs)}
+joongsung_index = {c: i for c, i in enumerate(joongsungs)}
+jongsung_index = {c: i for c, i in enumerate(jongsungs)}
