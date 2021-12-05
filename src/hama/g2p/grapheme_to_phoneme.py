@@ -17,13 +17,13 @@ class PronounciationRule:
         return f"[{self.id}] {self.pattern} -> {self.substitution}"
 
 
-class Phoneminizer:
+class Phonemizer:
     def __init__(self):
         # Take user dictionary as input.
-        with open("./jamo_to_ipa.json") as rf:
+        with open(Path(__file__).with_name("jamo_to_ipa.json")) as rf:
             self.jamo_table = json.load(rf)
         self.rules, self.pattern_to_rules = self.load_rules("./g2p_rules")
-        self.search_trees = self.construct_search_trees(rules)
+        self.search_trees = self.construct_search_trees(self.rules)
 
     def load_rules(self, rules_path):
         g2p_rules_path = Path(__file__).with_name("g2p_rules.txt")
@@ -41,16 +41,16 @@ class Phoneminizer:
                     pattern_to_rules[rule.pattern].append(rule)
                 else:
                     pattern_to_rules[rule.pattern] = [rule]
-        pattern_to_rules.sort(key=lambda x: (x.phase, x.priority))
+        # pattern_to_rules.sort(key=lambda x: (x.phase, x.priority))
 
-        return rules
+        return rules, pattern_to_rules
 
-    def construct_search_tree(self, rules):
+    def construct_search_trees(self, rules):
         search_trees = {}
         for phase in sorted(rules.keys()):
             phase_rules = rules[phase]
             ac = AhoCorasickAutomaton()
-            ac.add_words([rule.pattern for rule in rules])
+            ac.add_words([rule.pattern for rule in phase_rules])
             search_trees[phase] = ac
         return search_trees
 
@@ -77,27 +77,28 @@ class Phoneminizer:
         # Jamos becomes three times longer.
         recovery_map = [r for r in recovery_map for i in range(3)]
 
-        for phase in sorted(rules.keys()):
+        for phase in sorted(self.rules.keys()):
             # fix[1] is the starting index of matched pronounciation rule.
-            phase_rules = self.rules[phase]
-            fixes = list(self.pronounciation_fixes(phase_rules, jamos))
+            # phase_rules = self.rules[phase]
+            search_tree = self.search_trees[phase]
+            fixes = list(self.find_fixes(search_tree, jamos))
             fixes = self.resolve_overlap(fixes)
             jamos, recovery_map = self.apply_fixes(jamos, fixes, recovery_map)
 
         return jamos[::3], recovery_map[::3]
 
-    def jamo_to_ipa(jamo, position=None):
+    def jamo_to_ipa(self, jamo, position=None):
         if position is None:
             position = "o"
         if self.jamo_table.get(jamo).get(position) is None:
             raise Exception
         return self.jamo_table[jamo][position]
 
-    def pronounciation_fixes(self, rules, jamos):
+    def find_fixes(self, search_tree, jamos):
 
         pattern_to_rules = {}
         overlapped_fixes, prev_end_index = [], None
-        for found_rule in ac.search(jamos):
+        for found_rule in search_tree.search(jamos):
             pattern, start_index, end_index = found_rule
             for rule in pattern_to_rules[pattern]:
                 fix = (rule, start_index, end_index)
