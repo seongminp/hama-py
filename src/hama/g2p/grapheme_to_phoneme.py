@@ -96,11 +96,10 @@ class Phonemizer:
 
     def find_fixes(self, search_tree, jamos):
 
-        pattern_to_rules = {}
         overlapped_fixes, prev_end_index = [], None
         for found_rule in search_tree.search(jamos):
             pattern, start_index, end_index = found_rule
-            for rule in pattern_to_rules[pattern]:
+            for rule in self.pattern_to_rules[pattern]:
                 fix = (rule, start_index, end_index)
                 yield fix
 
