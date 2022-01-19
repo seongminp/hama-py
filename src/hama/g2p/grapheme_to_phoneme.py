@@ -54,22 +54,38 @@ class Phonemizer:
             search_trees[phase] = ac
         return search_trees
 
-    def g2p(self, text):
+    def g2p(self, text, ipa=True, return_structure=False):
         """Convert text into IPA phonemes.
 
         Args:
-            text (str): String to convert.
+            text              (str): String to convert.
+            ipa              (bool): [Default: True] Return IPA phonemes 
+                                     if True, and hangul jamos if False.
+            return_structure (bool): [Default: False] Return onset/nucleus/coda 
+                                     (a.k.a. Phonotactics a.k.a. syllable structure)
+                                     information for each phoneme or jamo.
 
         Returns:
             str: Phonemized text.
         """
+        phonemes, recovery_map = self.jamo_level_g2p(text)
+        if ipa:
+            ipa_generator = (
+                (self.jamo_to_ipa(jamo, pos), pos) for jamo, pos in phonemes
+            )
+            phonemes = [(p, pos) for p, pos in ipa_generator if p is not None]
 
-        jamos, recovery_map = self.jamo_level_g2p(text)
-        ipa = [self.jamo_to_ipa(jamo, pos) for jamo, pos in jamos]
-        # ipa = [jamo for jamo in jamos]
-        recovery_map = recovery_map
+        if not return_structure:
+            phonemes = [p for p, _ in phonemes]
 
-        return ipa, recovery_map
+        return phonemes, recovery_map
+
+    def jamo_to_ipa(self, jamo, position=None):
+        if position is None:
+            position = "o"
+        # if self.jamo_table.get(jamo).get(position) is None:
+        # raise Exception
+        return self.jamo_table[jamo][position]
 
     def jamo_level_g2p(self, text):
         jamos, recovery_map = disassemble(text, include_position=True)
@@ -85,14 +101,9 @@ class Phonemizer:
             fixes = self.resolve_overlap(fixes)
             jamos, recovery_map = self.apply_fixes(jamos, fixes, recovery_map)
 
-        return jamos[::3], recovery_map[::3]
-
-    def jamo_to_ipa(self, jamo, position=None):
-        if position is None:
-            position = "o"
-        if self.jamo_table.get(jamo).get(position) is None:
-            raise Exception
-        return self.jamo_table[jamo][position]
+        # jamos[2::3] is the list of positions.
+        jamos = list(zip(jamos[::3], jamos[2::3]))
+        return jamos, recovery_map[::3]
 
     def find_fixes(self, search_tree, jamos):
 
