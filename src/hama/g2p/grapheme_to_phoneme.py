@@ -22,6 +22,8 @@ class Phonemizer:
         # Take user dictionary as input.
         with open(Path(__file__).with_name("jamo_to_ipa.json")) as rf:
             self.jamo_table = json.load(rf)
+        with open(Path(__file__).with_name("jamo_to_ipa_single.json")) as rf:
+            self.jamo_table_single = json.load(rf)
         self.rules, self.pattern_to_rules = self.load_rules("./g2p_rules")
         self.search_trees = self.construct_search_trees(self.rules)
 
@@ -54,13 +56,15 @@ class Phonemizer:
             search_trees[phase] = ac
         return search_trees
 
-    def g2p(self, text, ipa=True, return_structure=False):
-        """Convert text into IPA phonemes.
+    def g2p(self, text, ipa=True, single_char_ipa=True, return_structure=False):
+        """Convert text into (IPA) phonemes.
 
         Args:
             text              (str): String to convert.
             ipa              (bool): [Default: True] Return IPA phonemes 
                                      if True, and hangul jamos if False.
+            single_char_ipa  (bool): [Default: False] Consolidate double-character 
+                                     ipa output into single characters.
             return_structure (bool): [Default: False] Return onset/nucleus/coda 
                                      (a.k.a. Phonotactics a.k.a. syllable structure)
                                      information for each phoneme or jamo.
@@ -71,7 +75,8 @@ class Phonemizer:
         phonemes, recovery_map = self.jamo_level_g2p(text)
         if ipa:
             ipa_generator = (
-                (self.jamo_to_ipa(jamo, pos), pos) for jamo, pos in phonemes
+                (self.jamo_to_ipa(jamo, pos, single_char_ipa), pos)
+                for jamo, pos in phonemes
             )
             phonemes = [(p, pos) for p, pos in ipa_generator if p is not None]
 
@@ -80,11 +85,11 @@ class Phonemizer:
 
         return phonemes, recovery_map
 
-    def jamo_to_ipa(self, jamo, position=None):
+    def jamo_to_ipa(self, jamo, position=None, single_char_ipa=False):
         if position is None:
             position = "o"
-        # if self.jamo_table.get(jamo).get(position) is None:
-        # raise Exception
+        if jamo not in self.jamo_table:
+            return jamo
         return self.jamo_table[jamo][position]
 
     def jamo_level_g2p(self, text):
