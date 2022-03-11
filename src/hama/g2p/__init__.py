@@ -1,1 +1,1 @@
-from .grapheme_to_phoneme import Phonemizer
+from .korean import Phonemizer as KoreanPhonemizer
