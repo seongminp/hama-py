@@ -28,7 +28,7 @@ class Phonemizer:
         self.search_trees = self.construct_search_trees(self.rules)
 
     def load_rules(self, rules_path):
-        g2p_rules_path = Path(__file__).with_name("g2p_rules.txt")
+        g2p_rules_path = Path(__file__).with_name("rules.txt")
         rules, pattern_to_rules = {}, {}
         with open(str(g2p_rules_path), "r") as rf:
             for line in rf:

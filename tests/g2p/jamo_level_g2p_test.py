@@ -1,11 +1,11 @@
 import pytest
 
-from hama import Phonemizer, disassemble
+from hama import KoreanPhonemizer, disassemble
 
 
 @pytest.fixture
 def phonemizer():
-    p = Phonemizer()
+    p = KoreanPhonemizer()
     return p
 
 
