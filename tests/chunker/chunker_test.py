@@ -47,11 +47,37 @@ def test_chunker_all():
 
 def test_chunker_no_whitespace():
     c = Chunker()
-    # assert(list(c.chunk("안녕하세요", return_types="chwen")) == [])
-    # assert(list(c.chunk("안 녕 하 세 요")) == [])
-    # assert(list(c.chunk("안녕하세요.")) == [])
-    # assert(list(c.chunk("안녕하세요123")) == [])
-    # assert(list(c.chunk("안1녕2하3세요")) == [])
-    # assert(list(c.chunk("안녕하세요hello")) == [])
-    # assert(list(c.chunk("hello world")) == [])
-    # assert(list(c.chunk("hello")) == [])
+    assert list(c.chunk("안녕하세요", return_types="hocnes")) == [(HANGUL, 0, 4)]
+    assert list(c.chunk("안 녕 하 세 요", return_types="hocnes")) == [
+        (HANGUL, 0, 0),
+        (HANGUL, 2, 2),
+        (HANGUL, 4, 4),
+        (HANGUL, 6, 6),
+        (HANGUL, 8, 8),
+    ]
+    assert list(c.chunk("안녕하세요.", return_types="hocnes")) == [
+        (HANGUL, 0, 4),
+        (SYMBOL, 5, 5),
+    ]
+    assert list(c.chunk("안녕하세요123", return_types="hocnes")) == [
+        (HANGUL, 0, 4),
+        (NUMBER, 5, 7),
+    ]
+    assert list(c.chunk("안1녕2하3세요", return_types="hocnes")) == [
+        (HANGUL, 0, 0),
+        (NUMBER, 1, 1),
+        (HANGUL, 2, 2),
+        (NUMBER, 3, 3),
+        (HANGUL, 4, 4),
+        (NUMBER, 5, 5),
+        (HANGUL, 6, 7),
+    ]
+    assert list(c.chunk("안녕하세요hello", return_types="hocnes")) == [
+        (HANGUL, 0, 4),
+        (ENGLISH, 5, 9),
+    ]
+    assert list(c.chunk("hello world", return_types="hocnes")) == [
+        (ENGLISH, 0, 4),
+        (ENGLISH, 6, 10),
+    ]
+    assert list(c.chunk("hello", return_types="hocnes")) == [(ENGLISH, 0, 4)]
