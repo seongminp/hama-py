@@ -3,8 +3,33 @@ from pathlib import Path
 
 from hama.string_search import AhoCorasickAutomaton
 
+{
+"U":"aeiou",
+"V":"aeiouäëïöüâêîôûùò@",
+"L":"äëïöüäëïöüäëïöüùò@",
+"S":"âêîôûâêîôûâêîôûùò@",
+"A":"aâä",
+"E":"eêë",
+"I":"iîï",
+"O":"oôö",
+"&":"eiou",
+"F":"eiêîy",
+"X":"bcdfghjklmnpqrstvwxyzç+$ñaeiouäëïöüâêîôûùò@",
+"C":"bcdfghjklmnpqrstvwxyzç+$ñ",
+"D":"td+",
+"R":"rl",
+"M":"mnñ",
+"T":"tdns+",
+"P":"ptk",
+"B":"bdg",
+"ß":"fs$+",
+"Z":"vz#+"
+}
+
+
 phase_functions = {
-        7: ['ie/ï/CC_#'], 
+        7: [PhaseFunction('ie/ï/CC_#'], 
+        7: [PhaseFunction('CC_#', 'ie', 'ï'), 
         8: ['y/ï/#CC_#', 'y/ï/#CCC_#'], 
         11: ['L/S/LC_CV#', 'L/S/LCC_CV#', 'L/S/LCCC_CV#']
         12: ['e//VC_#', 'e//VCC_#', 'e//VCCC_#', 'ë//XXX_li#'],
@@ -13,6 +38,8 @@ phase_functions = {
         21: ['V/@/VC_l#', 'V/@/VCV_l#', 'ê/@/VC_n#', 'ê/@/VCC_n#', 'î/@/VC_n#', 'î/@/VCC_n#', 'â/@/VC_n#', 'â/@/VCC_n#', 'ô/@/VC_n#', 'ô/@/VCC_n#'],
         22, ['A/@/XXX_b@l#']
 }
+
+def apply_phase_function(phase_function, text):
 
 
 class PronounciationRule:
@@ -25,6 +52,19 @@ class PronounciationRule:
 
     def __str__(self):
         return f"[{self.id}] {self.pattern} -> {self.substitution}"
+
+class PhaseFunction():
+
+    def __init__(self, pattern, from, to):
+        self.pattern = pattern
+        self.pattern_left, self.pattern_right = pattern.split('_')
+        self.from = from
+        self.to = to
+
+    def apply(self, text):
+        
+        return 
+
 
 
 class Phonemizer:
